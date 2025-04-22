@@ -1,14 +1,4 @@
-using System.Reflection;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using TravelAgency.Endpoints;
-using TravelAgency.Endpoints.Contracts;
-using TravelAgency.Infrastructure;
-using TravelAgency.Models;
-using TravelAgency.Services;
-using FluentValidation;
-using System.Reflection;
-using TravelAgency.Infrastructure.Configurations;
 using TravelAgency.Infrastructure.Persistence.Seed;
 using TravelAgency.Infrastructure.Extensions;
 
@@ -23,7 +13,6 @@ var app = builder.Build();
 
 using(var scope=app.Services.CreateScope())
 {
- 
     var seeder=scope.ServiceProvider.GetRequiredService<IdentityDataSeeder>();
     await seeder.SeedRoleAsync();
 }
@@ -40,6 +29,10 @@ app.UseHttpsRedirection();
 app.MapGroup("/api/v1/register")
     .WithTags("Auth")
     .MapAuthEndpoints();
+
+app.MapGroup("/api/v1/hotel")
+    .WithTags("Hotel")
+    .MapHotelEndpoints();
 
 app.UseAuthorization();
 

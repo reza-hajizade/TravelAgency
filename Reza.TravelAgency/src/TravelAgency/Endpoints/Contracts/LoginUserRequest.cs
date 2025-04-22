@@ -5,7 +5,7 @@ namespace TravelAgency.Endpoints.Contracts;
     public sealed record LoginUserRequest(string username,string password); 
 
 
-public class LoginValidator : AbstractValidator<LoginUserRequest>
+public sealed class LoginValidator : AbstractValidator<LoginUserRequest>
 {
     public LoginValidator()
     {
