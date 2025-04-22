@@ -15,6 +15,7 @@ using(var scope=app.Services.CreateScope())
 {
     var seeder=scope.ServiceProvider.GetRequiredService<IdentityDataSeeder>();
     await seeder.SeedRoleAsync();
+    await seeder.SeedAdminUserAsync();
 }
 
 if (app.Environment.IsDevelopment())
