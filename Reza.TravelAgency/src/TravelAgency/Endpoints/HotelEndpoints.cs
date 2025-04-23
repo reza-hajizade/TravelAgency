@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using TravelAgency.Endpoints.Contracts;
@@ -13,7 +14,7 @@ public static class HotelEndpoints
 {
     public static IEndpointRouteBuilder MapHotelEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/Create", Create);
+        app.MapPost("/Create", Create); 
         app.MapGet("/Get", GetByName);
         app.MapPut("/Update", UpdatePrice);
         app.MapDelete("/Delete", DeleteHotel);

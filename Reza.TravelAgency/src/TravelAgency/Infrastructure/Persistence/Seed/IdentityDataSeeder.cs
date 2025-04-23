@@ -49,7 +49,10 @@ namespace TravelAgency.Infrastructure.Persistence.Seed
             var existingAdmin = await _userManager.FindByEmailAsync(adminEmail);
 
             if (existingAdmin != null)
-                throw new Exception("Admin already exists");
+            {
+                Console.WriteLine("Admin already exists");
+                return;
+            }
 
 
             var admin = new ApplicationUser

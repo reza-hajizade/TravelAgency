@@ -7,6 +7,8 @@ using TravelAgency.Infrastructure.Configurations;
 using TravelAgency.Infrastructure.Persistence.Seed;
 using TravelAgency.Models;
 using TravelAgency.Services;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace TravelAgency.Infrastructure.Extensions;
 
@@ -24,7 +26,16 @@ public static class ApplicationExtensions
         builder.Services.AddScoped<TravelAgencyService>();
         builder.Services.AddScoped<JwtService>();
         builder.Services.AddScoped<IdentityDataSeeder>();
-        builder.Services.AddAuthorization();
+        builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+        builder.Services.AddAuthorization(option =>
+        {
+            option.AddPolicy("IsAdmin", policy =>
+            {
+                policy.RequireRole("Admin");
+            });
+           
+        });
 
         builder.Services.Configure<JwtSettings>(
             builder.Configuration.GetSection("Jwt"));

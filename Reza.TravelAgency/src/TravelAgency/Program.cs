@@ -1,6 +1,8 @@
-using TravelAgency.Endpoints;
+﻿using TravelAgency.Endpoints;
 using TravelAgency.Infrastructure.Persistence.Seed;
 using TravelAgency.Infrastructure.Extensions;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,15 +28,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
 
-app.MapGroup("/api/v1/register")
+
+app.MapGroup("/api/v1/Auth")
     .WithTags("Auth")
     .MapAuthEndpoints();
 
 app.MapGroup("/api/v1/hotel")
     .WithTags("Hotel")
+    .RequireAuthorization("IsAdmin")
     .MapHotelEndpoints();
 
-app.UseAuthorization();
+
+app.MapGet("/ping", () => "pong");
 
 app.Run();
